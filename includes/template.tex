@@ -1,0 +1,284 @@
+\documentclass[letterpaper,12pt]{article}
+
+\usepackage[printonlyused]{acronym}
+\usepackage{amsmath}
+\usepackage[font={small,sf},labelfont={small,sf}]{caption}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage[includeheadfoot,left=1in,top=.4in,right=1in,bottom=.75in,headsep=\dimexpr3cm-59pt\relax,headheight=59pt]{geometry}
+\usepackage{graphicx}
+\usepackage[pagebackref,hyperindex=true]{hyperref}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{mdwlist}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{tabularx}
+\usepackage[compact]{titlesec}
+\usepackage{xfrac}
+\usepackage{xspace}
+
+% default font packages
+\usepackage{courier} % use courier for the mono-spaced font 
+\usepackage{helvet}  % use a Helvetica clone for default text (sans-serif)
+
+%%%
+% default document settings
+%%%
+
+% setup the default fonts for section headers
+\titleformat*{\section}{\sffamily\fontsize{16}{16}\selectfont\bfseries}
+\titleformat*{\subsection}{\sffamily\fontsize{14}{14}\selectfont\bfseries}
+\titleformat*{\subsubsection}{\sffamily\fontsize{12}{12}\selectfont\bfseries}
+\titleformat*{\paragraph}{\sffamily\fontsize{12}{12}\selectfont\bfseries}
+\titleformat*{\subparagraph}{\sffamily\fontsize{12}{12}\selectfont\bfseries}
+
+% section numbering
+\setcounter{tocdepth}{3}     % display only 3 sections deep in the table of contents
+\setcounter{secnumdepth}{5}  % number to 5 sections deep
+
+% add acronyms to the TOC (use chapter, if chapters are available, otherwise use sections
+% Based off of suggestions at: http://jevopi.blogspot.com/2009/09/acronyms-and-latex.html
+\providecommand{\listofacronymsname}{List of Acronyms}
+\providecommand{\listofacronyms}{
+    \ifx\chapter\undefined
+        \chapter*{\listofacronymsname}
+	    % \addcontentsline{toc}{chapter}{\listofacronymsname}
+    \else
+        \section*{\listofacronymsname}
+		% \addcontentsline{toc}{section}{\listofacronymsname}
+    \fi
+    \label{sec:acronyms}
+	\markboth{\listofacronymsname}{\listofacronymsname}
+    \input{includes/acronyms}
+}
+
+%%%
+% custom page styles
+%%%
+
+\fancypagestyle{restricted}{
+    \fancyhead[L]{\rule[-2ex]{0pt}{2ex}\small \MakeUppercase{\baa}}
+    \fancyhead[c]{ 
+        \small
+        \ifdefined\classification
+        \textbf{\classification} \\ 
+        \fi
+        \textbf{ \company } \\
+        \textbf{\MakeUppercase{\restrictions} } \\
+        \title{}: \biline
+    }
+    \fancyhead[R]{\small \MakeUppercase{\baa}}
+
+    \fancyfoot[L]{\small \title}
+    \fancyfoot[c]{\small \textbf{{\MakeUppercase{\restrictions}}}}
+    \fancyfoot[c]{
+        \small
+        \textbf{\MakeUppercase{\restrictions} } \\
+        \ifdefined\classification
+        \textbf{\classification}
+        \fi
+    }
+    \fancyfoot[R]{\small \thepage}
+}
+
+\fancypagestyle{plain}{
+    \fancyhead[L]{\rule[-2ex]{0pt}{2ex}\small \MakeUppercase{\baa}}
+    \fancyhead[C]{ 
+        \small
+        \ifdefined\classification
+        \textbf{\classification} \\ 
+        \fi
+        \textbf{ \company } \\
+        \title{}: \biline
+    }
+    \fancyhead[R]{\small \MakeUppercase{\baa}}
+
+    \fancyfoot[L]{\small \title}
+    \fancyfoot[C]{
+        \small
+        \ifdefined\classification
+        \textbf{\classification}
+        \fi
+    }
+    \fancyfoot[R]{\small \thepage}
+}
+
+% set the default page style to "plain"
+\pagestyle{plain}
+
+%%%
+% page templates
+%%%
+
+\newcommand{\whitepapercover}{
+    \begin{titlepage}
+    \thispagestyle{empty}
+    \vspace*{1.25in}
+
+    \hfill \textsc{\sffamily\huge\bfseries \title} \\
+    \begin{flushright}
+        \textsc{\sffamily\large \biline} \\
+        \textsc{\sffamily\large \today}
+    \end{flushright}
+
+    \vspace{3.0in}
+    \begin{center}
+        \includegraphics[width=6.0in]{includes/logo.png}
+    \end{center}
+
+    \end{titlepage}
+    \cleardoublepage
+}
+
+\newcommand{\proposalcover}{
+    \thispagestyle{empty}
+    \vspace*{-1.25in}
+    \begin{center}
+        \includegraphics[width=4.0in]{includes/logo.png}
+    \end{center}
+  
+    {
+        \footnotesize
+        \begin{center}
+	        \begin{tabular}{|l|p{3.5in}|}
+	            \hline
+	            \textbf{BAA Number} & \baa \\ \hline
+	            \textbf{Technical Area} & \techarea \\ \hline
+	            \textbf{Lead Organization} & \company \\ \hline
+                
+                \ifdefined\companytype
+	            \textbf{Type of Business} & \companytype \\ \hline
+                \fi
+
+                \ifdefined\companyref
+	            \textbf{Contractor's Reference Number} & N/A \\ \hline
+                \fi
+
+                \ifdefined\team
+	            \textbf{Team Members} & \team \\ \hline
+                \fi
+
+	            \textbf{Proposal Title} & \title : \biline \\ \hline
+	            \textbf{Technical Point of Contact} & \author \\ & \email \\ & \phone \\ & \address \\ \hline
+	            \textbf{Administrative Point of Contact} & \author \\ & \email \\ & \phone \\ & \address \\ \hline
+
+                \ifdefined\cost
+	            \textbf{Proposed Cost} & \cost \\ \hline
+                \fi
+
+                \ifdefined\submitdate
+	            \textbf{Date Submitted} & \submitdate \\ \hline
+                \fi
+
+                \ifdefined\awardtype
+	            \textbf{Award Instrument Requested} & \awardtype \\ \hline
+                \fi
+
+                \ifdefined\placeofperformance
+	            \textbf{Place of Performance} & \placeofperformance \\ \hline
+                \fi
+
+                \ifdefined\pop
+	            \textbf{Period of Performance}  & \pop \\ \hline
+                \fi
+
+	            \textbf{Date Prepared} & \today \\ \hline
+
+                \ifdefined\duns
+	            \textbf{DUNS Number} & \duns \\ \hline
+                \fi
+
+                \ifdefined\tins
+	            \textbf{TIN number} & \tin \\ \hline
+                \fi
+                
+                \ifdefined\cagecode
+	            \textbf{Cage Code} & \cagecode \\ \hline
+                \fi
+	            \textbf{Proposal Validity Period} & This proposal is valid for 120 days \\ \hline
+	        \end{tabular}
+        \end{center}
+    }
+
+    \ifdefined\proposalcontrol
+    \section*{Use and Disclosure of Data}
+    This proposal includes data that shall not be disclosed outside the Government and shall not be duplicated, used, or disclosed—in whole or in part - for any purpose other than to evaluate this response.  If, however, a contract is awarded to this offeror as a result of - or in connection with - the submission of this data, the Government shall have the right to duplicate, use, or disclose the data to the extent provided in the resulting contract.  This restriction does not limit the Government's right to use information contained in this data if it is obtained from another source without restriction.
+    \fi
+    \cleardoublepage
+}
+
+\newcommand{\bib}{
+    \cleardoublepage
+    \pagestyle{plain}
+    \phantomsection
+    \ifx\chapter\undefined
+        \addcontentsline{toc}{chapter}{References}
+    \else
+        \addcontentsline{toc}{section}{References}
+    \fi
+    \bibliographystyle{unsrt} % unsrt = plain, except sorted by use, not date.
+    {
+        \raggedright
+        \bibliography{includes/refs}
+    }
+}
+
+\newcommand{\docinfo}{
+    \pagenumbering{roman}
+    \thispagestyle{plain}
+    \section*{Copyright}
+    Copyright \copyright \the\year \xspace \company.
+
+    All trademarks within this document belong to their respective owners.
+
+    \section*{Authors}
+    \author, \company
+
+    \section*{Point of Contact}
+            
+    \author \\ \email \\ \phone 
+    
+    \ifdefined\exportcontrol
+    \section*{Export Control}
+    WARNING - This document contains Technical Data whose export is restricted by the Arms Export Control Act (Title 22, U.S.C., Sec 2751, et seq.).  Violations of these export laws are subject to severe criminal penalties.
+    \fi
+    
+    \cleardoublepage
+
+    \tableofcontents
+    \listoftables
+    \listoffigures
+    \listofacronyms 
+    \cleardoublepage
+    \pagenumbering{arabic}
+}
+
+%%%
+% ease of use macros
+%%%
+
+% Example: \q{foo} 
+% Results: "foo" - except the quote marks go the right way.
+\newenvironment{q}[1]{``#1''} 
+
+% example: C:$\bs$Program Files$\bs$Adobe$\bs$
+% Results: C:\Program Files\Adobe\
+\def \bs{\char`\\}
+
+% example: \begin{fig}{figure label}{figure caption}{ ... }
+% results: A figure, boxed in the center, with font slightly shrunk, with a label and caption
+\newcommand{\temporarylabel}{}
+\newcommand{\temporarycaption}{}
+\newenvironment{fig}[2]{
+    \renewcommand{\temporarylabel}{#1}
+    \renewcommand{\temporarycaption}{#2}
+    \begin{figure}[!htbp]
+    \begin{center}
+    \begin{small}
+}{
+    \end{small}
+    \end{center}
+    \caption{\temporarycaption \label{\temporarylabel}}
+    \end{figure}
+}

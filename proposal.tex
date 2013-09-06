@@ -1,0 +1,66 @@
+\def \projectname{YOURMOM\xspace}
+
+\def \company{Your Company Name}
+\def \companyref{N/A}
+\def \companytype{OTHER SMALL BUSINESS}
+\def \team{N/A}
+\def \restrictions{Proprietary Information}
+\def \title{\projectname}
+\def \biline{Short phrase describing the project}
+\def \author{Your Name}
+\def \email{your-email@example.com}
+\def \phone{800-555-1212}
+\def \address{10 Main Street, Springfield, TX, 99999}
+
+%%
+% for each of the following items, uncommenting the fields will make them show up in the appropriate places
+%% 
+
+%\def \placeofperformance{\address}
+%\def \classification{For Official Use Only}   % only define if this is classified
+\def \exportcontrol{} % uncomment if this document is export controlled
+\def \proposalcontrol{} % uncomment if this is a proposal with restricted release for .gov purposes
+
+%% the following are only needed for proposals.  
+\def \baa{BAA-2013-001}
+\def \techarea{Technical Area 1 (Your mom's tech area)}
+\def \doctitle{Volume I (Technical and Management Proposal)}
+%\def \cost{\$1,000,000}
+
+%\def \duns{111111111}
+%\def \cagecode{222222}
+%\def \tin{33-3333333}
+%\def \awardtype{Cost Plus Fixed Fee (CPFF)}
+%\def \pop{January 1, 2000 - December 31, 2020 (3 days)}
+%\def \submitdate{January 1, 2020}
+
+\input{includes/template.tex}
+
+\begin{document}
+
+\proposalcover
+\whitepapercover
+\docinfo
+
+% mark pages that have restricted (aka: proprietary information with the "restricted" page style.
+\pagestyle{restricted}
+
+\section{Hi mom}
+I reference something here \cite{newsome2005dynamic}.
+
+\subsection{SubSection Title}
+This is a subsection.  I should use an acronymn here \ac{MITM} once, and then again \ac{MITM}.
+
+\subsubsection{Subsubsection title goes here}
+this is a sub sub section.
+
+\paragraph{Paragraph Title}
+This is a paragraph.
+
+\subparagraph{Sub-Paragraph Title}
+This is a subparagraph.
+
+\cite{frantzen2001stackghost} and \cite{cowan2001formatguard}.  Oh and \cite{ragsdale2000adaptation}.
+
+\bib
+\end{document}
